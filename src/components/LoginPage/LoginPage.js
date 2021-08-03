@@ -7,8 +7,10 @@ class LoginPage extends Component {
   render() {
     return (
       <div>
+        <div className="fullLogoContainer">
+          <img src="images/full_white_logo.png"/>
+        </div>
         <LoginForm />
-
         <center>
           <button
             type="button"
