@@ -17,7 +17,7 @@ const Nav = (props) => {
     return (
       <div className="nav">
         <Link to="/home">
-          <h2 className="nav-title">Prime Solo Project</h2>
+          <img src="images/white_logo.png"className="fullLogoContainer"/>
         </Link>
         <div className="nav-right">
           <Link className="nav-link" to={loginLinkData.path}>

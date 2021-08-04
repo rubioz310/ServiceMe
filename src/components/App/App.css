@@ -9,7 +9,7 @@ body,
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0px;
-  background-color: #c62828;
+  background-color: #e6e6e6; /* Change back to c62828*/
 }
 
 img {
@@ -130,4 +130,20 @@ Logo
   margin: 64px auto 0px auto;
   width: 320px;
   padding-bottom: 40px;
+}
+
+/* --------------------------------------------------------------------------------
+Select Use 
+-------------------------------------------------------------------------------- */
+.selectOption{
+  margin: 16px 0;
+  padding: 16px;
+  text-align: center;
+  width: 320px;
+  cursor: pointer;
+}
+
+.centerDiv{
+  display: flex;
+  justify-content: center;
 }
