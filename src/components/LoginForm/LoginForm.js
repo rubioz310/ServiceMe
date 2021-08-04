@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
 //Material-ui components
 import { TextField } from '@material-ui/core';
 
@@ -35,11 +38,13 @@ class LoginForm extends Component {
 
   render() {
     return (
-      <form className="formPanel" onSubmit={this.login}>
+      <form  onSubmit={this.login}>
         {this.props.store.errors.loginMessage && (
-          <h3 className="alert" role="alert">
+        <Snackbar open="true" autoHideDuration={6000} >
+          <MuiAlert elevation={6} variant="filled" severity="warning">
             {this.props.store.errors.loginMessage}
-          </h3>
+          </MuiAlert>
+        </Snackbar>
         )}
         <div className="loginInputContainer">
           <TextField
@@ -63,7 +68,6 @@ class LoginForm extends Component {
             value={this.state.password}
             onChange={this.handleInputChangeFor('password')}
           />
-        
         </div>
         <div className="formButtonContainer">
           <input className="btn" type="submit" name="submit" value="Log In" />

@@ -10,18 +10,20 @@ class LoginPage extends Component {
         <div className="fullLogoContainer">
           <img src="images/full_white_logo.png"/>
         </div>
-        <LoginForm />
-        <center>
-          <button
-            type="button"
-            className="btn btn_asLink"
-            onClick={() => {
-              this.props.history.push('/registration');
-            }}
-          >
-            Register
-          </button>
-        </center>
+        <div className="formPanel">
+          <LoginForm />
+          <center>
+            <button
+              type="button"
+              className="btn btn_asLink"
+              onClick={() => {
+                this.props.history.push('/registration');
+              }}
+            >
+              Register
+            </button>
+          </center>
+        </div>
       </div>
     );
   }
