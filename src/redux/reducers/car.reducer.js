@@ -11,7 +11,16 @@ const newCar = (state = {}, action) => {
       return state;
   }
 };
+const cars = (state = [], action) => {
+  switch (action.type) {
+    case 'SET_CARS':
+        return action.payload;
+    default:
+      return state;
+  }
+};
 
 export default combineReducers({
-  newCar
+  newCar,
+  cars
 });

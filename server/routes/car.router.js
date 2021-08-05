@@ -9,7 +9,21 @@ const {
  * GET route template
  */
 router.get('/', rejectUnauthenticated, (req, res) => {
-  // GET route code here
+  const userId = req.user.id;
+  const query = `
+      select  uc.id as user_car_id, c.id as car_id, photo_url, make, model, "year", cs.id as service_id, last_service
+      from car as c
+      left join user_car as uc on c.id = uc.car_id
+      left join car_services as cs on cs.car_id = c.id
+      where uc.user_id = $1;`;
+  pool.query(query, [userId])
+    .then( result => {
+      res.send(result.rows);
+    })
+    .catch(err => {
+      console.log('Error getting cars', err);
+      res.sendStatus(500)
+    })
 
 });
 
@@ -55,19 +69,19 @@ router.post('/', rejectUnauthenticated, (req, res) => {
           res.sendStatus(201);
         }).catch(err => {
           //Catch for third query
-          console.log(err);
+          console.log('Error creating user car relation:',err);
           res.sendStatus(500)
         })
 
       }).catch(err => {
         // catch for second query
-        console.log(err);
+        console.log('Erro creating car service:',err);
         res.sendStatus(500)
       })
 
 // Catch for first query
   }).catch(err => {
-    console.log(err);
+    console.log('Error adding car:',err);
     res.sendStatus(500)
   })
 });
