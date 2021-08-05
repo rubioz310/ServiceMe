@@ -8,17 +8,14 @@ const {
 /**
  * GET route template
  */
-router.get('/', (req, res) => {
+router.get('/', rejectUnauthenticated, (req, res) => {
   // GET route code here
+
 });
 
-/**
- * POST route template
- */
 router.post('/', rejectUnauthenticated, (req, res) => {
   // POST route code here
-  console.log(req.user.id, req.body);
-  console.log(req.body);
+  const user_id = req.user.id;
   const {
       mileage,
       photo_url,
@@ -37,20 +34,31 @@ router.post('/', rejectUnauthenticated, (req, res) => {
   // FIRST QUERY MAKES CAR
   pool.query(insertCarQuery, [mileage, photo_url, make, model, year, vin, plates])
   .then(result => {
-    console.log('New car Id:', result.rows[0].id); //ID IS HERE!
     
     const createdCarId = result.rows[0].id
 
-    // Now handle the genre reference
     const insertMovieGenreQuery = `
       INSERT INTO "car_services" ("last_service", "car_id")
       VALUES  ($1, $2);
-      `
-      // SECOND QUERY ADDS GENRE FOR THAT NEW MOVIE
+      `;
+      // SECOND QUERY ADDS LAST SERVICE FOR CREATED CAR
       pool.query(insertMovieGenreQuery, [last_service, createdCarId])
       .then(result => {
-        //Now that both are done, send back success!
-        res.sendStatus(201);
+
+        const insertUserCarQuery = `
+          INSERT INTO "user_car" (user_id, car_id, role)
+          VALUES ($1, $2, $3);`;  
+        // Third query add user, car and role
+        pool.query(insertUserCarQuery, [user_id, createdCarId, 'Personal'])
+        .then(result => {
+          //Once all three queries are done it will send an answer back to client
+          res.sendStatus(201);
+        }).catch(err => {
+          //Catch for third query
+          console.log(err);
+          res.sendStatus(500)
+        })
+
       }).catch(err => {
         // catch for second query
         console.log(err);
