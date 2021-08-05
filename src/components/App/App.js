@@ -21,6 +21,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import SelectUse from '../SelectUse/SelectUse';
 import PersonalView from '../PersonalView/PersonalView';
+import AddCar from '../AddCar/AddCar';
 
 import './App.css';
 
@@ -63,11 +64,18 @@ class App extends Component {
               path="/info"
               component={InfoPage}
             />
+            {/* My Project routes*/}
             <ProtectedRoute
-              // logged in shows UserPage else shows LoginPage
+              // logged in shows PersonalView else shows LoginPage
               exact
               path="/personal"
               component={PersonalView}
+            />
+            <ProtectedRoute
+              // logged in shows AddCar else shows LoginPage
+              exact
+              path="/addCar"
+              component={AddCar}
             />
 
             {/* When a value is supplied for the authRedirect prop the user will
