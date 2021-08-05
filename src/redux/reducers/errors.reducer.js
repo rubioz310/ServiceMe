@@ -32,6 +32,19 @@ const registrationMessage = (state = '', action) => {
   }
 };
 
+// registrationMessage holds the string that will display
+// on the registration screen if there's an error
+const carMessage = (state = '', action) => {
+  switch (action.type) {
+    case 'CLEAR_CAR_ERROR':
+      return '';
+    case 'ADD_CAR_FAILURE':
+      return 'Well this is embarrassing. Maybe is something wrong with the server?';
+    default:
+      return state;
+  }
+};
+
 // make one object that has keys loginMessage, registrationMessage
 // these will be on the redux state at:
 // state.errors.loginMessage and state.errors.registrationMessage

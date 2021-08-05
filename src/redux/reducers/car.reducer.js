@@ -12,17 +12,6 @@ const newCar = (state = {}, action) => {
   }
 };
 
-// // registrationMessage holds the string that will display
-// // on the registration screen if there's an error
-// const registrationMessage = (state = '', action) => {
-//   switch (action.type) {
-//     case 'CLEAR_REGISTRATION_ERROR':
-//       return '';
-//     default:
-//       return state;
-//   }
-// };
-
 export default combineReducers({
   newCar
 });

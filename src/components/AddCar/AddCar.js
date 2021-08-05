@@ -11,11 +11,12 @@ function AddCar() {
     const newCar = useSelector(store => store.car.newCar)
 
     const handleAdd = () => {
-        console.log('Car added');
+        dispatch({
+            type: 'ADD_CAR',
+            payload: newCar
+        })
     }
     const handleChange = (event) => {
-        
-        console.log(newCar);
         dispatch({
             type: 'SET_CAR',
             payload: {
