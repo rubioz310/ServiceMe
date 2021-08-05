@@ -6,6 +6,7 @@ function* addCar(action) {
   try {
     // passes the username and password from the payload to the server
     yield axios.post('/api/car', action.payload);
+    yield put({type: 'CLEAR_CAR'})
 
   } catch (error) {
     console.log('Error adding new car:', error);

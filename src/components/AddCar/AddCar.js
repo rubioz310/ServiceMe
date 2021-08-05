@@ -2,12 +2,14 @@ import React from 'react';
 import { connect, useSelector } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 //Material-ui imports
 import { Grid } from '@material-ui/core';
 
 function AddCar() {
     const dispatch = useDispatch();
+    const history = useHistory();
     const newCar = useSelector(store => store.car.newCar)
 
     const handleAdd = () => {
@@ -15,6 +17,7 @@ function AddCar() {
             type: 'ADD_CAR',
             payload: newCar
         })
+        history.push('/personal')
     }
     const handleChange = (event) => {
         dispatch({
