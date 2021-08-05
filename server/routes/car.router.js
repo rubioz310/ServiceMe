@@ -5,9 +5,7 @@ const {
     rejectUnauthenticated,
   } = require('../modules/authentication-middleware');
 
-/**
- * GET route template
- */
+// get all cars fr the current user
 router.get('/', rejectUnauthenticated, (req, res) => {
   const userId = req.user.id;
   const query = `
@@ -28,7 +26,6 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 });
 
 router.post('/', rejectUnauthenticated, (req, res) => {
-  // POST route code here
   const user_id = req.user.id;
   const {
       mileage,
@@ -75,7 +72,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
 
       }).catch(err => {
         // catch for second query
-        console.log('Erro creating car service:',err);
+        console.log('Error creating car service:',err);
         res.sendStatus(500)
       })
 
@@ -86,4 +83,23 @@ router.post('/', rejectUnauthenticated, (req, res) => {
   })
 });
 
+router.get('/details/:id', rejectUnauthenticated, (req, res) => {
+  const userId = req.user.id;
+  const carId = req.params.id
+  const query = `
+      select  uc.car_id, mileage, photo_url, make, model, year, vin, plates, user_id, last_service
+      from car as c
+      left join user_car as uc on c.id = uc.car_id
+      left join car_services as cs on cs.car_id = c.id
+      where uc.user_id = $1 and c.id = $2;`;
+  pool.query(query, [userId, carId])
+    .then( result => {
+      res.send(result.rows[0]);
+    })
+    .catch(err => {
+      console.log('Error getting car details', err);
+      res.sendStatus(500)
+    })
+
+});
 module.exports = router;

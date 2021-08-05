@@ -1,33 +1,40 @@
-import { put, takeLatest } from 'redux-saga/effects';
+import { put, take, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
-// worker Saga: will be fired on "REGISTER" actions
+// Add new car for the current user
 function* addCar(action) {
   try {
-    // passes the username and password from the payload to the server
-    yield axios.post('/api/car', action.payload);
-    yield put({type: 'CLEAR_CAR'});
-    yield put({ type: 'FETCH_CARS'});
-
+    yield axios.post('/api/car', action.payload); 
+    yield put({type: 'CLEAR_CAR'}); //Clears reducer
+    yield put({ type: 'FETCH_CARS'}); //Reloads list of cars to include the new one
   } catch (error) {
     console.log('Error adding new car:', error);
     yield put({ type: 'ADD_CAR_FAILURE' });
   }
 }
+//Get all the cars that belongs to the user
 function* fetchCars(action) {
   try {
-    // passes the username and password from the payload to the server
     const cars = yield axios.get('/api/car');
-    yield put({type: 'SET_CARS', payload: cars.data})
-
+    yield put({type: 'SET_CARS', payload: cars.data}) //Loads user cars into a reducer
   } catch (error) {
     console.log('Error getting cars:', error);
+  }
+}
+//Gets the details of a singular car
+function* fetchCarDetails(action) {
+  try {
+    const carDetails = yield axios.get(`/api/car/details/${action.payload}`);
+    yield put({type: 'SET_CAR_DETAILS', payload: carDetails.data}); //Set car details into reducer
+  } catch (error) {
+    console.log('Error getting car details:', error);
   }
 }
 
 function* carSaga() {
   yield takeLatest('ADD_CAR', addCar);
   yield takeLatest('FETCH_CARS', fetchCars);
+  yield takeLatest('FETCH_CAR_DETAILS', fetchCarDetails);
 }
 
 export default carSaga;

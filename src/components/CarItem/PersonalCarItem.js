@@ -6,11 +6,14 @@ import mapStoreToProps from '../../redux/mapStoreToProps';
 //Material-ui imports
 import { Paper } from '@material-ui/core';
 
-const handleClick = () => {
-    console.log(car.car_id);
-}
-
 function PersonalCarItem ({ car }) {
+
+    const history = useHistory();
+
+    const handleClick = () => {
+        console.log(car.car_id);
+        history.push(`/personalCar/${car.car_id}`)
+    }
     return(
         <Paper onClick={handleClick}>
             <img src={car.photo_url}/>

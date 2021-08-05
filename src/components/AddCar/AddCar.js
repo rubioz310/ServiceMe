@@ -10,7 +10,7 @@ import { Grid } from '@material-ui/core';
 function AddCar() {
     const dispatch = useDispatch();
     const history = useHistory();
-    const newCar = useSelector(store => store.car.newCar)
+    const newCar = useSelector(store => store.car.car)
 
     const handleAdd = () => {
         dispatch({
