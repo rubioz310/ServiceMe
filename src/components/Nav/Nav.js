@@ -16,6 +16,8 @@ const Nav = (props) => {
     loginLinkData.text = 'Home';
     return (
       <div className="nav">
+        {/* If logged in change the body background color */}
+        {props.store.user.id && (<style>{'body  {background-color: #e6e6e6;}'}</style>)}
         <Link to="/home">
           <img src="images/white_logo.png"className="fullLogoContainer"/>
         </Link>

@@ -9,7 +9,7 @@ body,
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0px;
-  background-color: #e6e6e6; /* Change back to c62828*/
+  background-color: #c62828; /* Change back to c62828*/
 }
 
 img {
@@ -164,7 +164,4 @@ Add car
 
 .roundedCorner{
   border-radius: 16px;
-}
-.redBackground{
-  background-color: #c62828;
 }

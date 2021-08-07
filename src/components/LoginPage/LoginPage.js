@@ -6,7 +6,7 @@ import LoginForm from '../LoginForm/LoginForm';
 class LoginPage extends Component {
   render() {
     return (
-      <div className="redBackground">
+      <div>
         <div className="fullLogoContainer">
           <img src="images/full_white_logo.png"/>
         </div>
