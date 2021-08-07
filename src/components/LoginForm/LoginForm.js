@@ -49,7 +49,7 @@ class LoginForm extends Component {
         <div className="loginInputContainer">
           <TextField
             className="loginInput"
-            fullWidth="true"
+            fullWidth={true}
             label="Email"
             variant="outlined"
             size="small"
@@ -60,7 +60,7 @@ class LoginForm extends Component {
         <div className="loginInputContainer">
           <TextField
             className="loginInput"
-            fullWidth="true"
+            fullWidth={true}
             label="Password"
             size="small"
             type="password"

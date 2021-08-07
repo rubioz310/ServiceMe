@@ -144,6 +144,27 @@ Select Use
 }
 
 .centerDiv{
-  display: flex;
-  justify-content: center;
+  width: 80%;
+  margin: auto;
+}
+
+/* --------------------------------------------------------------------------------
+Add car
+-------------------------------------------------------------------------------- */
+
+.uploadPreview{
+  max-height: 200px;
+  max-width: 200px;
+}
+
+.carDetails{
+  max-height: 300px;
+  max-width: 300px;
+}
+
+.roundedCorner{
+  border-radius: 16px;
+}
+.redBackground{
+  background-color: #c62828;
 }

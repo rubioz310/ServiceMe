@@ -102,4 +102,24 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
     })
 
 });
+
+router.delete('/:id', rejectUnauthenticated, (req, res) => {
+  const userId = req.user.id;
+  const carId = req.params.id;
+  console.log(userId, carId);
+  const query = `
+      delete from car
+      using user_car uc
+      where uc.car_id=car.id
+      and car.id=$1 and user_id= $2;`;
+  pool.query(query, [carId, userId])
+    .then( result => {
+      res.sendStatus(202);
+    })
+    .catch(err => {
+      console.log('Error deleting car', err);
+      res.sendStatus(500)
+    })
+
+});
 module.exports = router;

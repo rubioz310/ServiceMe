@@ -31,10 +31,21 @@ function* fetchCarDetails(action) {
   }
 }
 
+function* deleteCar(action) {
+  try {
+    console.log(action);
+    yield axios.delete(`/api/car/${action.payload}`);
+    yield put({ type: 'FETCH_CARS'}); //Reloads list of cars to include the new one
+  } catch (error) {
+    console.log('Error deleting car:', error);
+  }
+}
+
 function* carSaga() {
   yield takeLatest('ADD_CAR', addCar);
   yield takeLatest('FETCH_CARS', fetchCars);
   yield takeLatest('FETCH_CAR_DETAILS', fetchCarDetails);
+  yield takeLatest('DELETE_CAR', deleteCar)
 }
 
 export default carSaga;
