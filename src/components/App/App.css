@@ -136,16 +136,18 @@ Logo
 Select Use 
 -------------------------------------------------------------------------------- */
 .selectOption{
-  margin: 16px 0;
   padding: 16px;
   text-align: center;
   width: 320px;
   cursor: pointer;
 }
-
+.selectOption:hover{
+  transform: scale(1.1);
+}
 .centerDiv{
-  width: 80%;
-  margin: auto;
+  display: inline-block;
+  left: 1%;
+  right: 1%;
 }
 
 /* --------------------------------------------------------------------------------
@@ -157,11 +159,12 @@ Add car
   max-width: 200px;
 }
 
-.carDetails{
+.carDetailsPreview{
   max-height: 300px;
   max-width: 300px;
 }
 
-.roundedCorner{
-  border-radius: 16px;
+.carDetails{
+  margin:  auto;
+  width: 80%;
 }

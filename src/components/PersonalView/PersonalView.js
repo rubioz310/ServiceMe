@@ -3,7 +3,8 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import PersonalCarItem from '../CarItem/PersonalCarItem';
-import { Button } from '@material-ui/core';
+import { Button, Paper } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
 function PersonalView() {
     const history = useHistory();
@@ -21,13 +22,17 @@ function PersonalView() {
     }
 
     return(
-        <div className="centerDiv">
-            <Button color="primary" variant="contained" size="large" onClick={handleAddCar}>Add Car</Button>
-            <p>Personal Cars</p>
-            {cars.map(car => (
-                <PersonalCarItem car={car} key={car.user_car_id}/>
-            ))}
-        </div>
+        <Grid container spacing={8} justifyContent="center" direction="column" alignItems="center">
+            <Grid item>
+                <Button color="primary" variant="contained" size="large" onClick={handleAddCar} className="ripple">Add Car</Button>
+            </Grid>
+            <Grid item>
+                {!cars[0] && <Paper>No cars</Paper>}
+                {cars.map(car => (
+                    <PersonalCarItem car={car} key={car.user_car_id}/>
+                ))}
+            </Grid>
+        </Grid>
         
     )
 }

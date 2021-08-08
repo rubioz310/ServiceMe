@@ -24,7 +24,7 @@ function PersonalCarDetails () {
     const { id } = useParams();
     const dispatch = useDispatch();
     const history = useHistory();
-    const carDetails = useSelector(store => store.car.car);
+    const carDetails = useSelector(store => store.car.carDetails);
 
     useEffect(()=> {
         dispatch({
@@ -40,21 +40,25 @@ function PersonalCarDetails () {
         })
         history.push('/personal')
     }
+    const handleUpdate = () =>{
+        history.push(`/updateCar/${id}`)
+    }
 
     return(
-        <Paper className="centerDiv">
-            
-            
-            <Grid container>
-                <Grid item xs={12}>
-                    <img src={carDetails.photo_url} className="carDetails"/>
+        <Paper className="carDetails">
+            <Grid container justifyContent="center" alignItems="center" spacing={6}>
+                <Grid container item xs={12} md={6} justifyContent="center" alignItems="center" >
+                    <img src={carDetails.photo_url} className="carDetailsPreview"/>
                 </Grid>
-                <Grid item xs={12}>
-                    <p>Make: {carDetails.make}</p>
-                    <p>Model: {carDetails.model}</p>
-                    <p>Year: {carDetails.year}</p>
-                    <p>Last Service: {prettyDate(carDetails.last_service)}</p>
-                    <button onClick={handleDelete}>Delete</button>
+                <Grid container item xs={12} md={6} justifyContent="center" alignItems="center">
+                    <div>
+                        <p>Make: {carDetails.make}</p>
+                        <p>Model: {carDetails.model}</p>
+                        <p>Year: {carDetails.year}</p>
+                        <p>Last Service: {prettyDate(carDetails.last_service)}</p>
+                        <button onClick={handleDelete}>Delete</button>
+                        <button onClick={handleUpdate}>Update</button>
+                    </div>
                 </Grid>
             </Grid>
         </Paper>

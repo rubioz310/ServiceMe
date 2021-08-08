@@ -18,16 +18,14 @@ function SelectUse() {
     }
 
   return (
-    <div lassName="centerDiv">
-        <Grid container spacing={3} justifyContent="flex-end" >
-            <Grid item xs={12}>
-                <Paper elevation={4} className="selectOption" onClick={handlePersonal}>Personal Use</Paper>
-            </Grid>
-            <Grid item xs={12}>
-                <Paper elevation={4} className="selectOption" onClick={handleCompany}>Company Use</Paper>
-            </Grid>
+    <Grid container spacing={8} justifyContent="center" direction="column" alignItems="center">
+        <Grid item xs={12}>
+            <Paper elevation={4} className="selectOption" onClick={handlePersonal} >Personal Use</Paper>
         </Grid>
-    </div>
+        <Grid item xs={12}>
+            <Paper elevation={4} className="selectOption" onClick={handleCompany}>Company Use</Paper>
+        </Grid>
+    </Grid>
   );
 }
 

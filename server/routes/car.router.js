@@ -120,6 +120,35 @@ router.delete('/:id', rejectUnauthenticated, (req, res) => {
       console.log('Error deleting car', err);
       res.sendStatus(500)
     })
-
 });
+
+router.put('/:id', rejectUnauthenticated, (req, res) => {
+  const user_id = req.user.id;
+  const car_id = req.params.id;
+  const {
+      mileage,
+      photo_url,
+      make,
+      model,
+      year,
+      vin,
+      plates
+  } = req.body;
+  // RETURNING "id" will give us back the id of the created car
+  const insertCarQuery = `
+  UPDATE "car" 
+  SET "mileage" = $1, "photo_url"=$2, "make"=$3, "model"=$4, "year"=$5, "vin"=$6,"plates"=$7
+  WHERE car.id=$8;`
+
+  // FIRST QUERY MAKES CAR
+  pool.query(insertCarQuery, [mileage, photo_url, make, model, year, vin, plates, car_id])
+  .then(result => {
+    res.sendStatus(202);
+// Catch for first query
+  }).catch(err => {
+    console.log('Error adding car:',err);
+    res.sendStatus(500)
+  })
+});
+
 module.exports = router;

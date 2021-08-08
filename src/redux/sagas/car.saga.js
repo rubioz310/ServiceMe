@@ -13,7 +13,7 @@ function* addCar(action) {
   }
 }
 //Get all the cars that belongs to the user
-function* fetchCars(action) {
+function* fetchCars() {
   try {
     const cars = yield axios.get('/api/car');
     yield put({type: 'SET_CARS', payload: cars.data}) //Loads user cars into a reducer
@@ -30,7 +30,15 @@ function* fetchCarDetails(action) {
     console.log('Error getting car details:', error);
   }
 }
-
+function* updateCar(action) {
+  try {
+    yield axios.put(`/api/car/${action.payload.id}`, action.payload.car); 
+    yield put({type: 'CLEAR_CAR_DETAILS'}); //Clears reducer
+    yield put({ type: 'FETCH_CARS'}); //Reloads list of cars to include the new one
+  } catch (error) {
+    console.log('Error updating car:', error);
+  }
+}
 function* deleteCar(action) {
   try {
     console.log(action);
@@ -45,7 +53,8 @@ function* carSaga() {
   yield takeLatest('ADD_CAR', addCar);
   yield takeLatest('FETCH_CARS', fetchCars);
   yield takeLatest('FETCH_CAR_DETAILS', fetchCarDetails);
-  yield takeLatest('DELETE_CAR', deleteCar)
+  yield takeLatest('DELETE_CAR', deleteCar);
+  yield takeLatest('UPDATE_CAR', updateCar)
 }
 
 export default carSaga;

@@ -25,6 +25,7 @@ import AddCar from '../AddCar/AddCar';
 
 import './App.css';
 import PersonalCarDetails from '../PersonalCarDetails/PersonalCarDetails';
+import UpdateCar from '../UpdateCar/UpdateCar';
 
 class App extends Component {
   componentDidMount() {
@@ -65,7 +66,9 @@ class App extends Component {
               path="/info"
               component={InfoPage}
             />
+
             {/* My Project routes*/}
+
             <ProtectedRoute
               // logged in shows PersonalView else shows LoginPage
               exact
@@ -84,6 +87,13 @@ class App extends Component {
               path="/personalCar/:id"
               component={PersonalCarDetails}
             />
+            <ProtectedRoute
+              // logged in shows AddCar else shows LoginPage
+              exact
+              path="/updateCar/:id"
+              component={UpdateCar}
+            />
+            {/* ^^^^^^^^^My personal routes^^^^^^^^^^^^^^^^ */}
 
             {/* When a value is supplied for the authRedirect prop the user will
             be redirected to the path supplied when logged in, otherwise they will

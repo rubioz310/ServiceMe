@@ -5,19 +5,7 @@ import mapStoreToProps from '../../redux/mapStoreToProps';
 
 //Material-ui imports
 import { Grid, Paper } from '@material-ui/core';
-
-function prettyDate(unformattedDate) {
-    const dateString = new Date(unformattedDate);
-
-    const year = dateString.getFullYear();
-    let month = (1 + dateString.getMonth()).toString() ;
-    let day = dateString.getDate().toString();
-
-    month = month.length === 1 ? '0' + month : month;
-    day = day.length === 1 ? '0' + day : day;
-
-    return month + '-' + day + '-' + year;
-}
+import dayjs from 'dayjs';
 
 function PersonalCarItem ({ car }) {
 
@@ -37,7 +25,8 @@ function PersonalCarItem ({ car }) {
                     <p>Make: {car.make}</p>
                     <p>Model: {car.model}</p>
                     <p>Year: {car.year}</p>
-                    <p>Last service: {prettyDate(car.last_service)}</p>
+                    <p>Last service: {dayjs(car.last_service).format('MM/DD/YYYY')}</p>
+                    <p>Next service: {dayjs(car.last_service).add(6,'M').format('MM/DD/YYYY')}</p>
                 </Grid>
             </Grid>
             
