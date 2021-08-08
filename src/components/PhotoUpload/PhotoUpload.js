@@ -1,7 +1,7 @@
 import React , {useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { uploadFile } from 'react-s3';
-
+import { Grid } from '@material-ui/core';
 
 const S3_BUCKET ='serviceme';
 const REGION ='us-east-2';
@@ -37,27 +37,11 @@ const UploadImageToS3WithReactS3 = ({oldPhoto, type}) => {
         .catch(err => console.error(err))
     }
 
-    const handleUpload = async (file) => {
-        uploadFile(file, config)
-            .then(data => {
-                console.log(data);
-                dispatch({
-                    type: 'CHANGE_CAR_DETAILS',
-                    payload: {
-                        property: "photo_url",
-                        value: data.location
-                    }
-                })
-            })
-            .catch(err => console.error(err))
-    }
-
     return (
-        <div>
-            <img className="uploadPreview" src={selectedFileUrl ? selectedFileUrl:oldPhoto}></img><br/>
-            <input type="file" onChange={handleFileInput}/><br/>
-            <button onClick={() => handleUpload(selectedFile)}> Upload</button>
-        </div>
+        <Grid item container spacing={1} justifyContent="center" alignContent="center" direction="column">
+            <Grid item container justifyContent="center" alignContent="center"><img className="uploadPreview" src={selectedFileUrl ? selectedFileUrl:oldPhoto}></img><br/></Grid>
+            <Grid item container justifyContent="center" alignContent="center"><input type="file" onChange={handleFileInput}/><br/></Grid>
+        </Grid>
     )
 }
 
