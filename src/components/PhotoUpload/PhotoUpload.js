@@ -1,5 +1,5 @@
 import React , {useState} from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { uploadFile } from 'react-s3';
 
 
@@ -14,7 +14,7 @@ const config = {
     accessKeyId: ACCESS_KEY,
     secretAccessKey: SECRET_ACCESS_KEY,
 }
-const UploadImageToS3WithReactS3 = () => {
+const UploadImageToS3WithReactS3 = ({oldPhoto}) => {
     const dispatch = useDispatch();
 
 
@@ -24,7 +24,6 @@ const UploadImageToS3WithReactS3 = () => {
     const handleFileInput = (e) => {
         setSelectedFile(e.target.files[0]);
         setSelectedFileUrl(URL.createObjectURL(e.target.files[0]))
-        console.log(selectedFile);
     }
 
     const handleUpload = async (file) => {
@@ -32,7 +31,7 @@ const UploadImageToS3WithReactS3 = () => {
             .then(data => {
                 console.log(data);
                 dispatch({
-                    type: 'SET_CAR',
+                    type: 'CHANGE_CAR_DETAILS',
                     payload: {
                         property: "photo_url",
                         value: data.location
@@ -44,8 +43,8 @@ const UploadImageToS3WithReactS3 = () => {
 
     return (
         <div>
+            <img className="uploadPreview" src={selectedFileUrl ? selectedFileUrl:oldPhoto}></img><br/>
             <input type="file" onChange={handleFileInput}/><br/>
-            <img className="uploadPreview" src={selectedFileUrl}></img><br/>
             <button onClick={() => handleUpload(selectedFile)}> Upload</button>
         </div>
     )
