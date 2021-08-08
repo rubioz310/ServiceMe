@@ -26,7 +26,7 @@ function PersonalView() {
             <Grid item>
                 <Button color="primary" variant="contained" size="large" onClick={handleAddCar} className="ripple">Add Car</Button>
             </Grid>
-            <Grid item>
+            <Grid item container spacing={3} justifyContent="center" alignItems="center" >
                 {!cars[0] && <Paper>No cars</Paper>}
                 {cars.map(car => (
                     <PersonalCarItem car={car} key={car.user_car_id}/>

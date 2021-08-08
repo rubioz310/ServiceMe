@@ -14,16 +14,27 @@ const config = {
     accessKeyId: ACCESS_KEY,
     secretAccessKey: SECRET_ACCESS_KEY,
 }
-const UploadImageToS3WithReactS3 = ({oldPhoto}) => {
+const UploadImageToS3WithReactS3 = ({oldPhoto, type}) => {
     const dispatch = useDispatch();
 
-
+    type = type === 'add' ? 'SET_CAR': 'CHANGE_CAR_DETAILS';
     const [selectedFile, setSelectedFile] = useState(null);
     const [selectedFileUrl, setSelectedFileUrl] = useState(null);
 
-    const handleFileInput = (e) => {
+    const handleFileInput = async (e) => {
         setSelectedFile(e.target.files[0]);
         setSelectedFileUrl(URL.createObjectURL(e.target.files[0]))
+        uploadFile(e.target.files[0], config)
+        .then(data => {
+            dispatch({
+                type: type,
+                payload: {
+                    property: "photo_url",
+                    value: data.location
+                }
+            })
+        })
+        .catch(err => console.error(err))
     }
 
     const handleUpload = async (file) => {

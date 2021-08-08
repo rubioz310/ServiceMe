@@ -168,3 +168,14 @@ Add car
   margin:  auto;
   width: 80%;
 }
+
+.addCarForm{
+  text-align: center;
+}
+
+.hover:hover{
+  transform: scale(1.1);
+}
+.hover:focus{
+  transform: scale(1.1);
+}

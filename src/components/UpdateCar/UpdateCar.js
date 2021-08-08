@@ -16,8 +16,8 @@ function UpdateCar() {
     const { id } = useParams();
     const dispatch = useDispatch();
     const history = useHistory();
-    const newCar = useSelector(store => store.car.carDetails)
-    const [selectedDate, setSelectedDate] = useState(dayjs(newCar.last_service));
+    const selectedCar = useSelector(store => store.car.carDetails)
+    const [selectedDate, setSelectedDate] = useState(dayjs(selectedCar.last_service));
 
     useEffect(()=> {
         dispatch({
@@ -30,7 +30,7 @@ function UpdateCar() {
             type: 'UPDATE_CAR',
             payload: {
                 id: id,
-                car: newCar
+                car: selectedCar
             }
         })
         history.push('/personal')
@@ -46,23 +46,23 @@ function UpdateCar() {
     }
     return(
         <Grid container spacing={2} justifyContent="center" alignContent="center" direction="column"> 
-        {!newCar ? <h1>No car to update</h1> : 
+        {!selectedCar ? <h1>No car to update</h1> : 
             <>
-                <Grid item ><h1>Update car</h1></Grid>
-                <Grid item xs={12}><UploadImageToS3WithReactS3 oldPhoto={newCar.photo_url}/></Grid>
-                <Grid item xs={12}><TextField variant="filled" fullWidth="true" placeholder="URL" onChange={handleChange} id="photo_url" value={newCar.photo_url}/></Grid>
-                <Grid item xs={12}><TextField variant="filled" fullWidth="true" placeholder="VIN" onChange={handleChange} id="vin" value={newCar.vin}/></Grid>
-                <Grid item xs={12}><TextField variant="filled" fullWidth="true" placeholder="Year" onChange={handleChange} id="year" value={newCar.year}/></Grid>
-                <Grid item xs={12}><TextField variant="filled" fullWidth="true" placeholder="Make" onChange={handleChange} id="make" value={newCar.make}/></Grid>
-                <Grid item xs={12}><TextField variant="filled" fullWidth="true" placeholder="Model" onChange={handleChange} id="model" value={newCar.model}/></Grid>
-                <Grid item xs={12}><TextField variant="filled" fullWidth="true" placeholder="License Plate" onChange={handleChange} id="plates" value={newCar.plates}/></Grid>
-                <Grid item xs={12}><TextField variant="filled" fullWidth="true" placeholder="Mileage" onChange={handleChange} id="mileage" value={newCar.mileage}/></Grid>
+                <Grid item xs={12} className="addCarForm"><h1>Update car</h1></Grid>
+                <Grid item xs={12}><UploadImageToS3WithReactS3 oldPhoto={selectedCar.photo_url} type="upload"/></Grid>
+                <Grid item xs={12}><TextField variant="filled" fullWidth="true" placeholder="URL" onChange={handleChange} id="photo_url" value={selectedCar.photo_url}/></Grid>
+                <Grid item xs={12}><TextField variant="filled" fullWidth="true" placeholder="VIN" onChange={handleChange} id="vin" value={selectedCar.vin}/></Grid>
+                <Grid item xs={12}><TextField variant="filled" fullWidth="true" placeholder="Year" onChange={handleChange} id="year" value={selectedCar.year}/></Grid>
+                <Grid item xs={12}><TextField variant="filled" fullWidth="true" placeholder="Make" onChange={handleChange} id="make" value={selectedCar.make}/></Grid>
+                <Grid item xs={12}><TextField variant="filled" fullWidth="true" placeholder="Model" onChange={handleChange} id="model" value={selectedCar.model}/></Grid>
+                <Grid item xs={12}><TextField variant="filled" fullWidth="true" placeholder="License Plate" onChange={handleChange} id="plates" value={selectedCar.plates}/></Grid>
+                <Grid item xs={12}><TextField variant="filled" fullWidth="true" placeholder="Mileage" onChange={handleChange} id="mileage" value={selectedCar.mileage}/></Grid>
                 <Grid item xs={12}>
                     <MuiPickersUtilsProvider utils={DayjsUtils}>
                         <label>Last service <KeyboardDatePicker onChange={setSelectedDate} id="last_service" value={selectedDate}/></label>
                     </MuiPickersUtilsProvider>
                 </Grid>
-                <Grid item xs={12}><button onClick={handleAdd}>Add car</button></Grid>
+                <Grid item xs={12}  className="addCarForm"><button onClick={handleAdd}>Upload car</button></Grid>
             </>}
         </Grid>
         

@@ -13,10 +13,18 @@ import dayjs from 'dayjs';
 
 
 function AddCar() {
+    useEffect(()=> {
+        dispatch({
+            type: 'CLEAR_CAR'
+        })
+      },[]);
+    
     const dispatch = useDispatch();
     const history = useHistory();
     const newCar = useSelector(store => store.car.newCar)
     const [selectedDate, setSelectedDate] = useState(new Date());
+
+    
 
     const handleAdd = () => {
         const car={...newCar, last_service: dayjs(selectedDate).format('MM/DD/YYYY')};
@@ -38,8 +46,8 @@ function AddCar() {
     }
     return(
         <Grid container spacing={2} justifyContent="center" alignContent="center" direction="column"> 
-            <Grid item ><h1>Add new car</h1></Grid>
-            <Grid item xs={12}><UploadImageToS3WithReactS3/></Grid>
+            <Grid item className="addCarForm"><h1>Add new car</h1></Grid>
+            <Grid item xs={12}><UploadImageToS3WithReactS3 type="add"/></Grid>
             <Grid item xs={12}><TextField variant="filled" fullWidth={true} label="URL" onChange={handleChange} id="photo_url" value={newCar.photo_url}/></Grid>
             <Grid item xs={12}><TextField variant="filled" fullWidth={true} label="VIN" onChange={handleChange} id="vin" value={newCar.vin}/></Grid>
             <Grid item xs={12}><TextField variant="filled" fullWidth={true} label="Year" onChange={handleChange} id="year" value={newCar.year}/></Grid>
