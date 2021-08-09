@@ -36,6 +36,7 @@ const useStyles = makeStyles(theme => ({
 
 function AddCar() {
     const classes = useStyles();
+    
     useEffect(()=> {
         dispatch({
             type: 'CLEAR_CAR'
@@ -113,7 +114,6 @@ function AddCar() {
                     </Paper>
                 </Grid>
             </Grid>
-            
         </Grid>
     )
 }
