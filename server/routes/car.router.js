@@ -9,10 +9,9 @@ const {
 router.get('/', rejectUnauthenticated, (req, res) => {
   const userId = req.user.id;
   const query = `
-      select  uc.id as user_car_id, c.id as car_id, photo_url, make, model, "year", cs.id as service_id, last_service
+      select  uc.id as user_car_id, c.id as car_id, photo_url, make, model, "year", last_service
       from car as c
       left join user_car as uc on c.id = uc.car_id
-      left join car_services as cs on cs.car_id = c.id
       where uc.user_id = $1;`;
   pool.query(query, [userId])
     .then( result => {
@@ -20,7 +19,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     })
     .catch(err => {
       console.log('Error getting cars', err);
-      res.sendStatus(500)
+      res.sendStatus(500);
     })
 
 });
@@ -38,18 +37,18 @@ router.post('/', rejectUnauthenticated, (req, res) => {
       last_service
   } = req.body;
   // RETURNING "id" will give us back the id of the created car
-  const insertCarQuery = `INSERT INTO "car" ("mileage", "photo_url", "make", "model", "year", "vin", "plates")
-                            VALUES ($1, $2, $3, $4, $5, $6, $7)
+  const insertCarQuery = `INSERT INTO "car" ("mileage", "photo_url", "make", "model", "year", "vin", "plates", "last_service")
+                            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
                             RETURNING "id";`
 
   // FIRST QUERY MAKES CAR
-  pool.query(insertCarQuery, [mileage, photo_url, make, model, year, vin, plates])
+  pool.query(insertCarQuery, [mileage, photo_url, make, model, year, vin, plates, last_service])
   .then(result => {
     
     const createdCarId = result.rows[0].id
 
     const insertMovieGenreQuery = `
-      INSERT INTO "car_services" ("last_service", "car_id")
+      INSERT INTO "past_services" ("past_service", "car_id")
       VALUES  ($1, $2);
       `;
       // SECOND QUERY ADDS LAST SERVICE FOR CREATED CAR
@@ -90,7 +89,6 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
       select  uc.car_id, mileage, photo_url, make, model, year, vin, plates, user_id, last_service
       from car as c
       left join user_car as uc on c.id = uc.car_id
-      left join car_services as cs on cs.car_id = c.id
       where uc.user_id = $1 and c.id = $2;`;
   pool.query(query, [userId, carId])
     .then( result => {
@@ -132,16 +130,17 @@ router.put('/:id', rejectUnauthenticated, (req, res) => {
       model,
       year,
       vin,
-      plates
+      plates,
+      last_service
   } = req.body;
   // RETURNING "id" will give us back the id of the created car
   const insertCarQuery = `
   UPDATE "car" 
-  SET "mileage" = $1, "photo_url"=$2, "make"=$3, "model"=$4, "year"=$5, "vin"=$6,"plates"=$7
-  WHERE car.id=$8;`
+  SET "mileage" = $1, "photo_url"=$2, "make"=$3, "model"=$4, "year"=$5, "vin"=$6,"plates"=$7, "last_service"=$8
+  WHERE car.id=$9;`
 
   // FIRST QUERY MAKES CAR
-  pool.query(insertCarQuery, [mileage, photo_url, make, model, year, vin, plates, car_id])
+  pool.query(insertCarQuery, [mileage, photo_url, make, model, year, vin, plates, last_service, car_id])
   .then(result => {
     res.sendStatus(202);
 // Catch for first query

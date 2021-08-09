@@ -46,11 +46,12 @@ function UpdateCar() {
         })
       },[]);
     const handleAdd = () => {
+        const car={...selectedCar, last_service: dayjs(selectedDate).format('MM/DD/YYYY')};
         dispatch({
             type: 'UPDATE_CAR',
             payload: {
                 id: id,
-                car: selectedCar
+                car: car
             }
         })
         history.push('/personal')
@@ -108,7 +109,7 @@ function UpdateCar() {
                                 </Grid>
                             </Grid>
                             <Grid item container justifyContent="center" alignContent="center">
-                                <Button className={classes.customButton} variant="contained" onClick={handleAdd}>Upload car</Button>
+                                <Button className={classes.customButton} variant="contained" onClick={handleAdd}>Update car</Button>
                             </Grid>
                         </Grid>
                     </Paper>

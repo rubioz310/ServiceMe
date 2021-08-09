@@ -12,17 +12,23 @@ class RegisterForm extends Component {
   state = {
     username: '',
     password: '',
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
   };
 
   registerUser = (event) => {
     event.preventDefault();
 
-    if (this.state.username && this.state.password) {
+    if (this.state.username && this.state.password && this.state.firstName && this.state.lastName && this.state.phoneNumber) {
       this.props.dispatch({
         type: 'REGISTER',
         payload: {
           username: this.state.username,
           password: this.state.password,
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          phoneNumber: this.state.phoneNumber,
         },
       });
     } else {
@@ -67,6 +73,39 @@ class RegisterForm extends Component {
             variant="outlined"
             value={this.state.password}
             onChange={this.handleInputChangeFor('password')}
+          />
+        </div>
+        <div className="loginInputContainer">
+          <TextField
+            className="loginInput"
+            fullWidth="true"
+            label="First Name"
+            variant="outlined"
+            size="small"
+            value={this.state.firstName}
+            onChange={this.handleInputChangeFor('firstName')}
+          />
+        </div>
+        <div className="loginInputContainer">
+          <TextField
+            className="loginInput"
+            fullWidth="true"
+            label="Last Name"
+            variant="outlined"
+            size="small"
+            value={this.state.lastName}
+            onChange={this.handleInputChangeFor('lastName')}
+          />
+        </div>
+        <div className="loginInputContainer">
+          <TextField
+            className="loginInput"
+            fullWidth="true"
+            label="Phone Number"
+            variant="outlined"
+            size="small"
+            value={this.state.phoneNumber}
+            onChange={this.handleInputChangeFor('phoneNumber')}
           />
         </div>
         <div className="formButtonContainer">
